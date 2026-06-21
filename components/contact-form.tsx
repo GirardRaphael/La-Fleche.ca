@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useState, type FormEvent, type ChangeEvent } from "react";
 import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea, Select, Label } from "@/components/ui/field";
@@ -13,6 +13,9 @@ export function ContactForm({ variant = "contact" }: { variant?: Variant }) {
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const [messageLength, setMessageLength] = useState(0);
+  const MESSAGE_MAX = 2000;
+  const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   const budgets =
     lang === "fr"
@@ -35,10 +38,21 @@ export function ContactForm({ variant = "contact" }: { variant?: Variant }) {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setError("");
-    setIsSubmitting(true);
     const form = e.currentTarget;
     const data = new FormData(form);
 
+    const nameVal = (data.get("name") as string | null)?.trim() ?? "";
+    const emailVal = (data.get("email") as string | null)?.trim() ?? "";
+    if (!nameVal) {
+      setError(lang === "fr" ? "Le nom est requis." : "Name is required.");
+      return;
+    }
+    if (!EMAIL_RE.test(emailVal)) {
+      setError(lang === "fr" ? "Adresse courriel invalide." : "Invalid email address.");
+      return;
+    }
+
+    setIsSubmitting(true);
     try {
       const response = await fetch("/api/contact", {
         method: "POST",
@@ -208,13 +222,20 @@ export function ContactForm({ variant = "contact" }: { variant?: Variant }) {
       )}
 
       <div>
-        <Label htmlFor="message">
-          {variant === "demo" ? fd.message : fc.message}
-        </Label>
+        <div className="flex items-center justify-between">
+          <Label htmlFor="message">
+            {variant === "demo" ? fd.message : fc.message}
+          </Label>
+          <span className={`text-xs tabular-nums ${messageLength > MESSAGE_MAX * 0.9 ? "text-rose-400" : "text-muted"}`}>
+            {messageLength}/{MESSAGE_MAX}
+          </span>
+        </div>
         <Textarea
           id="message"
           name="message"
+          maxLength={MESSAGE_MAX}
           placeholder={variant === "demo" ? fd.messagePh : fc.messagePh}
+          onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setMessageLength(e.target.value.length)}
         />
       </div>
 

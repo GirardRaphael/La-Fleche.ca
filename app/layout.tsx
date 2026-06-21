@@ -1,9 +1,19 @@
 import type { Metadata, Viewport } from "next";
 import { Inter, Space_Grotesk } from "next/font/google";
+import dynamic from "next/dynamic";
 import "./globals.css";
 import { Providers } from "@/components/providers";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { Analytics } from "@vercel/analytics/react";
+
+const LiquidEtherBackground = dynamic(
+  () =>
+    import("@/components/liquid-ether-background").then((m) => ({
+      default: m.LiquidEtherBackground,
+    })),
+  { ssr: false }
+);
 
 const inter = Inter({
   subsets: ["latin"],
@@ -79,11 +89,13 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${spaceGrotesk.variable} font-sans antialiased`}
       >
+        <LiquidEtherBackground />
         <Providers>
           <Navbar />
-          <main className="min-h-screen">{children}</main>
+          <main className="relative z-10 min-h-screen">{children}</main>
           <Footer />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );

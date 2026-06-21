@@ -11,11 +11,6 @@ export function HeroSection() {
 
   return (
     <section className="relative overflow-hidden pt-28 pb-16 sm:pt-36 md:pb-24">
-      {/* Animated background */}
-      <div className="pointer-events-none absolute inset-0 mesh-bg" />
-      <div className="pointer-events-none absolute inset-0 grid-lines opacity-60 [mask-image:radial-gradient(ellipse_at_center,black,transparent_75%)]" />
-      <div className="pointer-events-none absolute -left-32 top-20 h-96 w-96 rounded-full bg-brand-purple/20 blur-[120px]" />
-      <div className="pointer-events-none absolute -right-20 top-40 h-96 w-96 rounded-full bg-brand-blue/20 blur-[120px]" />
 
       <div className="container-x relative">
         <div className="grid items-center gap-12 lg:grid-cols-[1.05fr_0.95fr]">

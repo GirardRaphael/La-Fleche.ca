@@ -8,7 +8,20 @@ const MAX_REQUESTS = 5;
 const RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
 const MAX_BODY_BYTES = 16 * 1024;
 const EMAIL_TIMEOUT_MS = 10_000;
+const ALLOWED_ORIGIN =
+  process.env.ALLOWED_ORIGIN ?? "https://la-fleche.ca";
 const requestsByIp = new Map<string, number[]>();
+
+const SECURITY_HEADERS = {
+  "Cache-Control": "no-store, no-cache",
+  "Access-Control-Allow-Origin": ALLOWED_ORIGIN,
+  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Headers": "Content-Type",
+} as const;
+
+export async function OPTIONS() {
+  return new Response(null, { status: 204, headers: SECURITY_HEADERS });
+}
 
 type ContactRequest = {
   variant?: "contact" | "demo";
@@ -92,9 +105,21 @@ async function isRateLimited(ip: string) {
 }
 
 export async function POST(request: Request) {
+  const origin = request.headers.get("origin");
+  const isDev = process.env.NODE_ENV === "development";
+  if (origin && origin !== ALLOWED_ORIGIN && !(isDev && origin.includes("localhost"))) {
+    return NextResponse.json(
+      { error: "Forbidden" },
+      { status: 403, headers: SECURITY_HEADERS }
+    );
+  }
+
   const contentLength = Number(request.headers.get("content-length") ?? "0");
   if (contentLength > MAX_BODY_BYTES) {
-    return NextResponse.json({ error: "Request too large" }, { status: 413 });
+    return NextResponse.json(
+      { error: "Request too large" },
+      { status: 413, headers: SECURITY_HEADERS }
+    );
   }
 
   const apiKey = process.env.RESEND_API_KEY;
@@ -102,7 +127,7 @@ export async function POST(request: Request) {
     console.error("RESEND_API_KEY is not configured");
     return NextResponse.json(
       { error: "Email service unavailable" },
-      { status: 503 }
+      { status: 503, headers: SECURITY_HEADERS }
     );
   }
 
@@ -112,31 +137,43 @@ export async function POST(request: Request) {
     request.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ??
     "unknown";
   if (await isRateLimited(ip)) {
-    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
+    return NextResponse.json(
+      { error: "Too many requests" },
+      { status: 429, headers: SECURITY_HEADERS }
+    );
   }
 
   let rawBody: string;
   try {
     rawBody = await request.text();
   } catch {
-    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid request" },
+      { status: 400, headers: SECURITY_HEADERS }
+    );
   }
 
   if (new TextEncoder().encode(rawBody).length > MAX_BODY_BYTES) {
-    return NextResponse.json({ error: "Request too large" }, { status: 413 });
+    return NextResponse.json(
+      { error: "Request too large" },
+      { status: 413, headers: SECURITY_HEADERS }
+    );
   }
 
   let payload: ContactRequest;
   try {
     payload = JSON.parse(rawBody) as ContactRequest;
   } catch {
-    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    return NextResponse.json(
+      { error: "Invalid request" },
+      { status: 400, headers: SECURITY_HEADERS }
+    );
   }
 
   const fields =
     payload.fields && typeof payload.fields === "object" ? payload.fields : {};
   if (clean(fields.website, 100)) {
-    return NextResponse.json({ ok: true });
+    return NextResponse.json({ ok: true }, { headers: SECURITY_HEADERS });
   }
 
   const name = cleanSingleLine(fields.name, 120);
@@ -144,8 +181,8 @@ export async function POST(request: Request) {
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if (!name || !emailPattern.test(email)) {
     return NextResponse.json(
-      { error: "A valid name and email are required" },
-      { status: 400 }
+      { error: "Invalid request" },
+      { status: 400, headers: SECURITY_HEADERS }
     );
   }
 
@@ -199,7 +236,10 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     console.error("Contact email request failed", error);
-    return NextResponse.json({ error: "Email delivery failed" }, { status: 502 });
+    return NextResponse.json(
+      { error: "Email delivery failed" },
+      { status: 502, headers: SECURITY_HEADERS }
+    );
   } finally {
     clearTimeout(timeout);
   }
@@ -207,8 +247,11 @@ export async function POST(request: Request) {
   if (!response.ok) {
     const details = await response.text();
     console.error("Resend rejected contact email", response.status, details);
-    return NextResponse.json({ error: "Email delivery failed" }, { status: 502 });
+    return NextResponse.json(
+      { error: "Email delivery failed" },
+      { status: 502, headers: SECURITY_HEADERS }
+    );
   }
 
-  return NextResponse.json({ ok: true });
+  return NextResponse.json({ ok: true }, { headers: SECURITY_HEADERS });
 }

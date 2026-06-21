@@ -72,7 +72,7 @@ La-Fleche-ai Web/
 │   └── utils.ts                  # cn() class helper
 │
 ├── tailwind.config.ts            # Colors, gradients, animations
-├── next.config.mjs
+├── next.config.js            # Security headers (CSP, CORS, X-Frame-Options)
 ├── tsconfig.json
 └── package.json
 ```
@@ -155,11 +155,16 @@ The logo is currently a **hand-built SVG** in `components/logo.tsx`
    ```
 2. Go to **[vercel.com](https://vercel.com)** → **Add New… → Project** → import the repo.
 3. Vercel auto-detects Next.js. Leave defaults (Build: `next build`, Output handled automatically). Click **Deploy**.
-4. Add the required environment variables before using the contact forms:
-   - `RESEND_API_KEY`
-   - `RESEND_FROM_EMAIL`
-   - `CONTACT_RECIPIENT_EMAIL`
-   - Optional for durable production rate limiting: `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`
+4. Add environment variables (copy `.env.example` → `.env.local` and fill in values):
+
+| Variable | Required | Description |
+|---|---|---|
+| `RESEND_API_KEY` | **Yes** | Resend email API key |
+| `RESEND_FROM_EMAIL` | No | Sender address (must be verified Resend domain) |
+| `CONTACT_RECIPIENT_EMAIL` | No | Who receives form submissions |
+| `UPSTASH_REDIS_REST_URL` | Recommended | Redis URL for distributed rate limiting |
+| `UPSTASH_REDIS_REST_TOKEN` | Recommended | Redis token |
+| `ALLOWED_ORIGIN` | No | CORS allowed origin (default: `https://la-fleche.ca`) |
 
 ### Connect **la-fleche.ca** to Vercel
 
