@@ -14,6 +14,12 @@
   scrollbar-color: rgba(56, 189, 248, 0.5) transparent;
 }
 
+.scroll-stack-scroller.window-scroll {
+  height: auto;
+  overflow: visible;
+  overscroll-behavior: auto;
+}
+
 .scroll-stack-scroller::-webkit-scrollbar {
   width: 8px;
 }
@@ -30,6 +36,11 @@
 .scroll-stack-inner {
   min-height: 100vh;
   padding: 18vh clamp(1rem, 4vw, 5rem) 36rem;
+}
+
+.scroll-stack-scroller.window-scroll .scroll-stack-inner {
+  padding-top: 8vh;
+  padding-bottom: 44rem;
 }
 
 .scroll-stack-card-wrapper {
@@ -49,6 +60,10 @@
   border-radius: 28px;
   -webkit-transform: translateZ(0);
   transform: translateZ(0);
+}
+
+.scroll-stack-card:hover {
+  z-index: 999;
 }
 
 .scroll-stack-end {

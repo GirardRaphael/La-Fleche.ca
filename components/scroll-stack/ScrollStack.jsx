@@ -294,6 +294,7 @@ const ScrollStack = ({
       if (i < cards.length - 1) {
         card.style.marginBottom = `${itemDistance}px`;
       }
+      card.style.zIndex = `${cards.length + i}`;
       card.style.willChange = "transform, filter";
       card.style.transformOrigin = "top center";
       card.style.backfaceVisibility = "hidden";
@@ -337,7 +338,7 @@ const ScrollStack = ({
 
   return (
     <div
-      className={`scroll-stack-scroller ${className}`.trim()}
+      className={`scroll-stack-scroller ${useWindowScroll ? "window-scroll" : ""} ${className}`.trim()}
       ref={scrollerRef}
     >
       <div className="scroll-stack-inner">

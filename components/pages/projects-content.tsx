@@ -35,7 +35,7 @@ export function ProjectsContent() {
 
       <section className="container-x py-12">
         <Reveal>
-          <div className="h-[78vh] min-h-[620px] overflow-visible rounded-[28px] border border-white/10 bg-card/20 shadow-2xl shadow-black/20">
+          <div className="relative overflow-visible">
             <ScrollStack
               itemDistance={86}
               itemScale={0.025}
@@ -45,6 +45,7 @@ export function ProjectsContent() {
               baseScale={0.83}
               rotationAmount={0.35}
               blurAmount={0.35}
+              useWindowScroll
             >
               {projects.map((project, index) => (
                 <ScrollStackItem

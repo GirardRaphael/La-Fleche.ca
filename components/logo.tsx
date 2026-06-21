@@ -1,4 +1,5 @@
 import Link from "next/link";
+import GlitchText from "@/components/glitch-text/GlitchText";
 import { cn } from "@/lib/utils";
 
 type LogoProps = {
@@ -9,8 +10,8 @@ type LogoProps = {
 };
 
 /**
- * La Flèche AI logo — a custom arrow glyph blending an arrowhead, a
- * data-flow line and a motion trail, in a purple→blue→cyan gradient.
+ * La Fleche AI logo: a custom arrow glyph blending an arrowhead,
+ * a data-flow line, and a motion trail.
  */
 export function LogoMark({
   className,
@@ -30,13 +31,19 @@ export function LogoMark({
       aria-hidden="true"
     >
       <defs>
-        <linearGradient id="lafleche-grad" x1="4" y1="40" x2="44" y2="8" gradientUnits="userSpaceOnUse">
+        <linearGradient
+          id="lafleche-grad"
+          x1="4"
+          y1="40"
+          x2="44"
+          y2="8"
+          gradientUnits="userSpaceOnUse"
+        >
           <stop stopColor="#7C3AED" />
           <stop offset="0.5" stopColor="#2563EB" />
           <stop offset="1" stopColor="#38BDF8" />
         </linearGradient>
       </defs>
-      {/* motion trail */}
       <path
         d="M4 38 L20 22"
         stroke="url(#lafleche-grad)"
@@ -51,14 +58,12 @@ export function LogoMark({
         strokeLinecap="round"
         opacity="0.6"
       />
-      {/* main shaft */}
       <path
         d="M14 40 L40 14"
         stroke="url(#lafleche-grad)"
         strokeWidth="4.5"
         strokeLinecap="round"
       />
-      {/* arrowhead */}
       <path
         d="M28 10 L42 8 L40 22"
         stroke="url(#lafleche-grad)"
@@ -71,14 +76,25 @@ export function LogoMark({
   );
 }
 
-export function Logo({ className, showText = true, href = "/", size = 36 }: LogoProps) {
+export function Logo({
+  className,
+  showText = true,
+  href = "/",
+  size = 36,
+}: LogoProps) {
   const content = (
     <span className={cn("inline-flex items-center gap-2.5", className)}>
       <LogoMark size={size} />
       {showText && (
         <span className="font-display text-lg font-bold tracking-tight">
-          La Flèche{" "}
-          <span className="gradient-text">AI</span>
+          <GlitchText
+            speed={0.9}
+            enableShadows
+            enableOnHover
+            className="gradient-text bg-brand-gradient"
+          >
+            La Fleche AI
+          </GlitchText>
         </span>
       )}
     </span>
@@ -86,10 +102,11 @@ export function Logo({ className, showText = true, href = "/", size = 36 }: Logo
 
   if (href) {
     return (
-      <Link href={href} aria-label="La Flèche AI — accueil" className="inline-flex">
+      <Link href={href} aria-label="La Fleche AI home" className="inline-flex">
         {content}
       </Link>
     );
   }
+
   return content;
 }
