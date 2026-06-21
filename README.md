@@ -17,7 +17,7 @@ Framer Motion and Lucide icons. Dark mode by default with a light mode toggle.
 - **9 pages** — Home, Services, Solutions, Projects (+ detail pages), Pricing, Blog, About, Contact, Book a Demo.
 - **Custom branding** — hand-built SVG arrow logo (purple→blue→cyan gradient), used in navbar, footer, favicon and hero.
 - **Animations** — animated hero "AI command center", scroll reveals, animated counters, gradient backgrounds, hover cards, glassmorphism panels.
-- **Working forms** — Contact and Book a Demo forms open a pre-filled email to the business (no backend required).
+- **Working forms** — Contact and Book a Demo forms submit to a Next.js API route and send email through Resend.
 - **SEO** — per-page metadata, Open Graph, `sitemap.xml`, `robots.txt`, semantic HTML.
 - **Responsive & accessible** — mobile menu, focus states, keyboard-friendly.
 
@@ -155,7 +155,11 @@ The logo is currently a **hand-built SVG** in `components/logo.tsx`
    ```
 2. Go to **[vercel.com](https://vercel.com)** → **Add New… → Project** → import the repo.
 3. Vercel auto-detects Next.js. Leave defaults (Build: `next build`, Output handled automatically). Click **Deploy**.
-4. No environment variables are required.
+4. Add the required environment variables before using the contact forms:
+   - `RESEND_API_KEY`
+   - `RESEND_FROM_EMAIL`
+   - `CONTACT_RECIPIENT_EMAIL`
+   - Optional for durable production rate limiting: `UPSTASH_REDIS_REST_URL` and `UPSTASH_REDIS_REST_TOKEN`
 
 ### Connect **la-fleche.ca** to Vercel
 

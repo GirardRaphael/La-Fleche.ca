@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 1060" role="img" aria-labelledby="title desc">
+  <title id="title">La Fleche AI profile avatar</title>
+  <desc id="desc">A stylized profile silhouette for the La Fleche AI card.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#050816"/>
+      <stop offset="0.48" stop-color="#1e1b4b"/>
+      <stop offset="1" stop-color="#0e7490"/>
+    </linearGradient>
+    <linearGradient id="figure" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f8fafc"/>
+      <stop offset="0.5" stop-color="#93c5fd"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="36%" r="52%">
+      <stop offset="0" stop-color="#38bdf8" stop-opacity="0.75"/>
+      <stop offset="0.46" stop-color="#7c3aed" stop-opacity="0.35"/>
+      <stop offset="1" stop-color="#050816" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="blur">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+  <rect width="760" height="1060" fill="url(#bg)"/>
+  <circle cx="378" cy="332" r="320" fill="url(#glow)"/>
+  <g opacity="0.62">
+    <path d="M88 238h584M88 348h584M88 458h584M88 568h584M88 678h584" stroke="#e0f2fe" stroke-width="2" stroke-opacity="0.12"/>
+    <path d="M160 110v780M300 110v780M440 110v780M580 110v780" stroke="#e0f2fe" stroke-width="2" stroke-opacity="0.1"/>
+  </g>
+  <path d="M160 862c27-154 113-246 221-246s194 92 221 246v198H160V862z" fill="#020617" opacity="0.5" filter="url(#blur)"/>
+  <path d="M162 858c27-145 112-231 218-231s191 86 218 231v202H162V858z" fill="url(#figure)"/>
+  <circle cx="380" cy="388" r="154" fill="#020617" opacity="0.38" filter="url(#blur)"/>
+  <circle cx="380" cy="368" r="138" fill="url(#figure)"/>
+  <path d="M245 377c58-89 156-132 268-96 20 7 39 17 55 30-21-95-94-163-188-163-103 0-188 82-194 187 19 13 38 27 59 42z" fill="#050816" opacity="0.78"/>
+  <path d="M250 732c40 42 83 63 130 63s90-21 130-63" fill="none" stroke="#f8fafc" stroke-width="10" stroke-linecap="round" opacity="0.35"/>
+  <path d="M255 900h250" stroke="#050816" stroke-width="16" stroke-linecap="round" opacity="0.24"/>
+</svg>

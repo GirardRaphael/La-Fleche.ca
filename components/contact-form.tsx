@@ -1,18 +1,18 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { ArrowRight, CheckCircle2 } from "lucide-react";
+import { ArrowRight, CheckCircle2, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input, Textarea, Select, Label } from "@/components/ui/field";
 import { useLanguage } from "@/lib/i18n";
 
 type Variant = "contact" | "demo";
 
-const RECIPIENT = "xxraphaelgirardxx@gmail.com";
-
 export function ContactForm({ variant = "contact" }: { variant?: Variant }) {
   const { t, lang } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState("");
 
   const budgets =
     lang === "fr"
@@ -32,24 +32,37 @@ export function ContactForm({ variant = "contact" }: { variant?: Variant }) {
   const contactMethods =
     lang === "fr" ? ["Courriel", "Téléphone", "Visioconférence"] : ["Email", "Phone", "Video call"];
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setError("");
+    setIsSubmitting(true);
     const form = e.currentTarget;
     const data = new FormData(form);
-    const lines: string[] = [];
-    data.forEach((value, key) => {
-      if (value) lines.push(`${key}: ${value}`);
-    });
-    const subject =
-      variant === "demo"
-        ? "La Flèche AI — Demo request"
-        : "La Flèche AI — Contact";
-    const body = encodeURIComponent(lines.join("\n"));
-    // Open the user's mail client pre-filled. No backend required.
-    window.location.href = `mailto:${RECIPIENT}?subject=${encodeURIComponent(
-      subject
-    )}&body=${body}`;
-    setSubmitted(true);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          variant,
+          language: lang,
+          fields: Object.fromEntries(data.entries()),
+        }),
+      });
+
+      if (!response.ok) throw new Error("Message delivery failed");
+
+      form.reset();
+      setSubmitted(true);
+    } catch {
+      setError(
+        lang === "fr"
+          ? "Le message n'a pas pu être envoyé. Veuillez réessayer ou écrire directement à xxraphaelgirardxx@gmail.com."
+          : "Your message could not be sent. Please try again or email xxraphaelgirardxx@gmail.com directly."
+      );
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   if (submitted) {
@@ -78,6 +91,15 @@ export function ContactForm({ variant = "contact" }: { variant?: Variant }) {
       onSubmit={handleSubmit}
       className="space-y-5 rounded-2xl border border-white/10 bg-card/40 p-6 sm:p-8"
     >
+      <div className="hidden" aria-hidden="true">
+        <Label htmlFor="website">Website</Label>
+        <Input
+          id="website"
+          name="website"
+          tabIndex={-1}
+          autoComplete="off"
+        />
+      </div>
       <div className="grid gap-5 sm:grid-cols-2">
         <div>
           <Label htmlFor="name">{variant === "demo" ? fd.name : fc.name}</Label>
@@ -196,9 +218,30 @@ export function ContactForm({ variant = "contact" }: { variant?: Variant }) {
         />
       </div>
 
-      <Button type="submit" size="lg" className="w-full">
-        {variant === "demo" ? t.common.requestDemo : t.common.sendMessage}
-        <ArrowRight className="h-4 w-4" />
+      {error && (
+        <p role="alert" className="text-sm text-rose-400">
+          {error}
+        </p>
+      )}
+
+      <Button
+        type="submit"
+        size="lg"
+        className="w-full"
+        disabled={isSubmitting}
+      >
+        {isSubmitting
+          ? lang === "fr"
+            ? "Envoi..."
+            : "Sending..."
+          : variant === "demo"
+            ? t.common.requestDemo
+            : t.common.sendMessage}
+        {isSubmitting ? (
+          <Loader2 className="h-4 w-4 animate-spin" />
+        ) : (
+          <ArrowRight className="h-4 w-4" />
+        )}
       </Button>
     </form>
   );

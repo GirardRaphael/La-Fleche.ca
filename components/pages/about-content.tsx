@@ -1,17 +1,16 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Target, Crosshair, Wrench, Eye, ArrowRight } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { Reveal } from "@/components/reveal";
 import { Button } from "@/components/ui/button";
-import { LogoMark } from "@/components/logo";
 import { useLanguage } from "@/lib/i18n";
+import ProfileCard from "@/components/profile-card/ProfileCard";
 
 const valueIcons = [Target, Crosshair, Wrench, Eye];
 
 export function AboutContent() {
-  const { t } = useLanguage();
+  const { t, lang } = useLanguage();
   const about = t.aboutPage;
 
   return (
@@ -31,15 +30,30 @@ export function AboutContent() {
           </Reveal>
 
           <Reveal delay={0.1}>
-            <div className="relative flex items-center justify-center rounded-3xl border border-white/10 bg-card/40 p-12">
-              <div className="absolute inset-12 rounded-full bg-brand-purple/10 blur-3xl" />
-              <motion.div
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
-                className="relative"
-              >
-                <LogoMark size={140} />
-              </motion.div>
+            <div className="relative flex justify-center lg:justify-end">
+              <ProfileCard
+                name="La Flèche AI"
+                title={
+                  lang === "fr"
+                    ? "Studio d'automatisation IA"
+                    : "AI Automation Studio"
+                }
+                handle="laflecheai"
+                status={lang === "fr" ? "Disponible" : "Available"}
+                contactText={t.common.contactUs}
+                avatarUrl="/assets/profile-card/avatar.svg"
+                miniAvatarUrl="/assets/profile-card/avatar.svg"
+                iconUrl="/assets/profile-card/iconpattern.svg"
+                showUserInfo
+                enableTilt
+                enableMobileTilt={false}
+                behindGlowEnabled
+                behindGlowColor="rgba(56, 189, 248, 0.55)"
+                innerGradient="linear-gradient(145deg, rgba(124, 58, 237, 0.48) 0%, rgba(37, 99, 235, 0.28) 45%, rgba(56, 189, 248, 0.22) 100%)"
+                onContactClick={() => {
+                  window.location.href = "/contact";
+                }}
+              />
             </div>
           </Reveal>
         </div>

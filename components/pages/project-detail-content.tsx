@@ -1,7 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowLeft, ArrowRight, Check, AlertCircle, TrendingUp } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Check,
+  AlertCircle,
+  Github,
+  TrendingUp,
+} from "lucide-react";
 import { motion } from "framer-motion";
 import { Icon } from "@/components/icon";
 import { Button } from "@/components/ui/button";
@@ -100,11 +107,15 @@ export function ProjectDetailContent({ slug }: { slug: string }) {
         <div className="flex flex-col items-center gap-4 rounded-2xl border border-white/10 bg-card/30 p-8 text-center">
           <h3 className="font-display text-xl font-semibold">{labels.cta}</h3>
           <div className="flex flex-col gap-3 sm:flex-row">
+            <Button href={project.githubUrl} external>
+              GitHub
+              <Github className="h-4 w-4" />
+            </Button>
             <Button href="/book-demo">
               {t.common.bookDemo}
               <ArrowRight className="h-4 w-4" />
             </Button>
-            <Button href="/contact" variant="secondary">
+            <Button href="/contact" variant="outline">
               {t.common.contactUs}
             </Button>
           </div>

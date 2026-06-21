@@ -62,18 +62,6 @@ export function HeroVisual() {
                 opacity="0.5"
                 className="animate-dash-flow"
               />
-              <motion.circle
-                r="3"
-                fill="#38BDF8"
-                initial={{ cx: center, cy: center }}
-                animate={{ cx: [center, x], cy: [center, y] }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  delay: i * 0.3,
-                  ease: "easeInOut",
-                }}
-              />
             </g>
           );
         })}

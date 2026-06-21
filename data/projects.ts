@@ -2,6 +2,7 @@ import type { Localized } from "@/lib/i18n";
 
 export type Project = {
   slug: string;
+  githubUrl: string;
   icon: string; // lucide-react icon name
   name: Localized;
   tagline: Localized;
@@ -15,6 +16,7 @@ export type Project = {
 export const projects: Project[] = [
   {
     slug: "ai-escalation-manager",
+    githubUrl: "https://github.com/GirardRaphael/TasK_Assigner_app",
     icon: "AlertTriangle",
     accent: "purple",
     category: { fr: "Agents IA", en: "AI Agents" },
@@ -48,6 +50,7 @@ export const projects: Project[] = [
   },
   {
     slug: "inbox-ai",
+    githubUrl: "https://github.com/GirardRaphael",
     icon: "Mail",
     accent: "blue",
     category: { fr: "Agents IA", en: "AI Agents" },
@@ -81,6 +84,7 @@ export const projects: Project[] = [
   },
   {
     slug: "loading-planner-ai",
+    githubUrl: "https://github.com/GirardRaphael/Ai-Loading-Planner",
     icon: "PackageOpen",
     accent: "cyan",
     category: { fr: "Logistique", en: "Logistics" },
@@ -114,6 +118,7 @@ export const projects: Project[] = [
   },
   {
     slug: "dispatch-ai",
+    githubUrl: "https://github.com/GirardRaphael/inventory-management-app",
     icon: "Truck",
     accent: "purple",
     category: { fr: "Logistique", en: "Logistics" },
@@ -147,6 +152,7 @@ export const projects: Project[] = [
   },
   {
     slug: "ai-call-assistant",
+    githubUrl: "https://github.com/GirardRaphael/Call-Bot-Assistant",
     icon: "PhoneCall",
     accent: "blue",
     category: { fr: "Agents IA", en: "AI Agents" },
@@ -180,6 +186,7 @@ export const projects: Project[] = [
   },
   {
     slug: "power-bi-dashboards",
+    githubUrl: "https://github.com/GirardRaphael/BuisnessAnalyticsApp",
     icon: "LayoutDashboard",
     accent: "cyan",
     category: { fr: "Business Intelligence", en: "Business Intelligence" },
@@ -213,6 +220,7 @@ export const projects: Project[] = [
   },
   {
     slug: "pothole-navigation-app",
+    githubUrl: "https://github.com/GirardRaphael/nid-de-poule",
     icon: "Navigation",
     accent: "purple",
     category: { fr: "Logiciel sur mesure", en: "Custom Software" },
@@ -246,6 +254,7 @@ export const projects: Project[] = [
   },
   {
     slug: "amq-delivery-app",
+    githubUrl: "https://github.com/GirardRaphael/inventory-management-app",
     icon: "ShoppingBag",
     accent: "blue",
     category: { fr: "Logiciel sur mesure", en: "Custom Software" },
