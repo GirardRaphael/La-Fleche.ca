@@ -91,6 +91,20 @@ export const dictionary = {
       subtitle:
         "Un aperçu des systèmes que La Flèche AI conçoit pour les opérations modernes.",
     },
+    skills: {
+      eyebrow: "Competences",
+      title: "Une base full-stack pour livrer de vrais systemes IA",
+      subtitle:
+        "Les competences techniques qu'un developpeur IA senior mobilise pour passer d'une idee a un produit fiable, mesurable et pret a operer.",
+      supporting: [
+        "LLM orchestration, agents, tool calling et workflows autonomes",
+        "APIs, dashboards, bases de donnees, authentification et interfaces web",
+        "RAG, recherche vectorielle, pipelines data et integrations metier",
+        "Deploiement cloud, monitoring, logs, performance et fiabilite",
+        "Securite applicative, validation des sorties IA et garde-fous",
+        "Design produit, UX operationnelle et adoption par les equipes",
+      ],
+    },
     results: {
       eyebrow: "Résultats potentiels",
       title: "L'impact que l'automatisation peut générer",
@@ -334,6 +348,20 @@ export const dictionary = {
       title: "Real systems, not theory",
       subtitle:
         "A look at the systems La Flèche AI builds for modern operations.",
+    },
+    skills: {
+      eyebrow: "Skills",
+      title: "A full-stack foundation for real AI systems",
+      subtitle:
+        "The senior AI developer skill set needed to move from idea to reliable, measurable, production-ready software.",
+      supporting: [
+        "LLM orchestration, agents, tool calling, and autonomous workflows",
+        "APIs, dashboards, databases, authentication, and web interfaces",
+        "RAG, vector search, data pipelines, and business integrations",
+        "Cloud deployment, monitoring, logs, performance, and reliability",
+        "Application security, AI output validation, and guardrails",
+        "Product design, operational UX, and team adoption",
+      ],
     },
     results: {
       eyebrow: "Potential results",

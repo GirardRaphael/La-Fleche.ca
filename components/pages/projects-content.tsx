@@ -37,14 +37,14 @@ export function ProjectsContent() {
         <Reveal>
           <div className="relative overflow-visible">
             <ScrollStack
-              itemDistance={86}
-              itemScale={0.025}
-              itemStackDistance={26}
+              itemDistance={96}
+              itemScale={0.018}
+              itemStackDistance={22}
               stackPosition="16%"
               scaleEndPosition="7%"
-              baseScale={0.83}
-              rotationAmount={0.35}
-              blurAmount={0.35}
+              baseScale={0.88}
+              rotationAmount={0.12}
+              blurAmount={0}
               useWindowScroll
             >
               {projects.map((project, index) => (
