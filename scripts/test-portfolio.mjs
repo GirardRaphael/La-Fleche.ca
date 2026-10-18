@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
 import ts from 'typescript';
+assert.ok(readFileSync('app/layout.tsx', 'utf8').includes('La Flèche AI'));
 const source = ts.transpileModule(readFileSync('data/projects.ts', 'utf8'), { compilerOptions: { module: ts.ModuleKind.CommonJS, target: ts.ScriptTarget.ES2020 } }).outputText;
 const module = { exports: {} };
 vm.runInNewContext(source, { module, exports: module.exports });
@@ -42,6 +43,7 @@ if (process.env.TEST_BASE_URL) {
   const home = await (await fetch(base)).text();
   assert.equal((home.match(/data-project=/g) || []).length, 6);
   const gallery = await (await fetch(`${base}/projects`)).text();
+  assert.ok(gallery.includes('La Flèche AI'), 'Brand accents must render correctly');
   assert.equal((gallery.match(/data-project=/g) || []).length, 15);
   assert.ok(gallery.includes('BuisnessAnalyticsApp'));
 }

@@ -3,10 +3,12 @@
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
 export function ThemeToggle({ className }: { className?: string }) {
   const { theme, setTheme } = useTheme();
+  const { lang } = useLanguage();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => setMounted(true), []);
@@ -16,7 +18,7 @@ export function ThemeToggle({ className }: { className?: string }) {
   return (
     <button
       type="button"
-      aria-label={isDark ? "Activer le mode clair" : "Activer le mode sombre"}
+      aria-label={lang === "fr" ? (isDark ? "Activer le mode clair" : "Activer le mode sombre") : (isDark ? "Switch to light mode" : "Switch to dark mode")}
       onClick={() => setTheme(isDark ? "light" : "dark")}
       className={cn(
         "relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/10 bg-white/5 text-foreground transition-colors hover:bg-white/10",

@@ -23,8 +23,8 @@ const SITE_URL = "https://la-fleche.ca";
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "La FlÃ¨che AI | AI Automation, Dashboards & Custom Software",
-    template: "%s | La FlÃ¨che AI",
+    default: "La Flèche AI | AI Automation, Dashboards & Custom Software",
+    template: "%s | La Flèche AI",
   },
   description:
     "Bilingual AI automation company helping businesses automate operations, workflows, dashboards, and customer communication.",
@@ -35,23 +35,23 @@ export const metadata: Metadata = {
     "Power BI dashboards",
     "AI agents",
     "workflow automation",
-    "QuÃ©bec AI company",
+    "Québec AI company",
   ],
-  authors: [{ name: "La FlÃ¨che AI" }],
-  creator: "La FlÃ¨che AI",
+  authors: [{ name: "La Flèche AI" }],
+  creator: "La Flèche AI",
   openGraph: {
     type: "website",
     locale: "fr_CA",
     alternateLocale: "en_CA",
     url: SITE_URL,
-    siteName: "La FlÃ¨che AI",
-    title: "La FlÃ¨che AI | AI Automation, Dashboards & Custom Software",
+    siteName: "La Flèche AI",
+    title: "La Flèche AI | AI Automation, Dashboards & Custom Software",
     description:
       "Automate operations, communication, and decision-making with AI agents, intelligent dashboards, and custom software.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "La FlÃ¨che AI | AI Automation & Custom Software",
+    title: "La Flèche AI | AI Automation & Custom Software",
     description:
       "Automate today. Accelerate tomorrow. Bilingual AI automation for modern operations.",
   },
