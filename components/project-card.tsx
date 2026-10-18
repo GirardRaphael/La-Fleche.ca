@@ -1,67 +1,36 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight, Github } from "lucide-react";
 import { Icon } from "@/components/icon";
 import { useLanguage } from "@/lib/i18n";
-import { cn } from "@/lib/utils";
 import type { Project } from "@/data/projects";
 
-const accentRing: Record<Project["accent"], string> = {
-  purple: "group-hover:border-brand-purple/50",
-  blue: "group-hover:border-brand-blue/50",
-  cyan: "group-hover:border-brand-cyan/50",
-};
-
-const accentText: Record<Project["accent"], string> = {
-  purple: "text-brand-purple",
-  blue: "text-brand-blue",
-  cyan: "text-brand-cyan",
-};
-
 export function ProjectCard({ project }: { project: Project }) {
-  const { pick, t } = useLanguage();
-
+  const { pick, lang } = useLanguage();
   return (
-    <Link
-      href={`/projects/${project.slug}`}
-      className={cn(
-        "group relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-card/40 p-6 transition-all duration-300 hover:-translate-y-1",
-        accentRing[project.accent]
-      )}
-    >
-      <div className="flex items-start justify-between">
-        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-white/5 ring-1 ring-inset ring-white/10">
-          <Icon name={project.icon} className={cn("h-6 w-6", accentText[project.accent])} />
-        </div>
-        <ArrowUpRight className="h-5 w-5 text-muted transition-all group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-foreground" />
+    <article className="portfolio-card group" data-project={project.slug} data-accent={project.accent}>
+      <div className="portfolio-card-header">
+        <div className="portfolio-icon"><Icon name={project.icon} className="h-6 w-6" /></div>
+        <span className="portfolio-status">{pick(project.status)}</span>
       </div>
-
-      <span className="mt-5 text-xs font-medium uppercase tracking-wide text-muted">
-        {pick(project.category)}
-      </span>
-      <h3 className="mt-1 font-display text-lg font-semibold">
-        {pick(project.name)}
+      <p className="mt-6 text-xs font-semibold uppercase tracking-wider text-muted">{pick(project.category)}</p>
+      <h3 className="mt-2 font-display text-xl font-semibold leading-snug">
+        <Link href={`/projects/${project.slug}`} className="transition-colors hover:text-brand-blue">{pick(project.name)}</Link>
       </h3>
-      <p className="mt-2 text-sm leading-relaxed text-muted">
-        {pick(project.tagline)}
-      </p>
-
-      <div className="mt-4 space-y-1.5 border-t border-white/10 pt-4">
-        {pick(project.features)
-          .slice(0, 3)
-          .map((f) => (
-            <div key={f} className="flex items-center gap-2 text-xs text-muted">
-              <Check className={cn("h-3.5 w-3.5 shrink-0", accentText[project.accent])} />
-              {f}
-            </div>
-          ))}
+      <p className="mt-3 text-sm leading-relaxed text-muted">{pick(project.tagline)}</p>
+      <ul className="mt-5 flex flex-wrap gap-1.5" aria-label={lang === "fr" ? "Technologies" : "Technology stack"}>
+        {project.stack.slice(0, 5).map((tech) => <li key={tech} className="portfolio-tag">{tech}</li>)}
+        {project.stack.length > 5 && <li className="portfolio-tag">+{project.stack.length - 5}</li>}
+      </ul>
+      <div className="mt-auto flex items-center justify-between gap-3 border-t border-border pt-5">
+        <Link href={`/projects/${project.slug}`} className="portfolio-link text-sm font-semibold" aria-label={`${lang === "fr" ? "Explorer" : "Explore"} ${pick(project.name)}`}>
+          {lang === "fr" ? "Explorer le projet" : "Explore project"}<ArrowUpRight className="h-4 w-4" />
+        </Link>
+        <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" className="portfolio-source" aria-label={`GitHub — ${project.repository}`}>
+          <Github className="h-4 w-4" /><span className="sr-only">GitHub</span>
+        </a>
       </div>
-
-      <span className={cn("mt-5 inline-flex items-center gap-1 text-sm font-medium", accentText[project.accent])}>
-        {t.common.viewProject}
-        <ArrowUpRight className="h-4 w-4" />
-      </span>
-    </Link>
+    </article>
   );
 }

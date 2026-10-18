@@ -90,13 +90,13 @@ export function Footer() {
               </li>
               <li>
                 <a
-                  href="https://github.com/xxraphaelgirardxx"
+                  href="https://github.com/GirardRaphael"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="group inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-foreground"
                 >
                   <Github className="h-4 w-4 text-brand-cyan" />
-                  @xxraphaelgirardxx
+                  @GirardRaphael
                   <ArrowUpRight className="h-3.5 w-3.5 opacity-0 transition-opacity group-hover:opacity-100" />
                 </a>
               </li>

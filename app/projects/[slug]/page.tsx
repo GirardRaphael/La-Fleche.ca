@@ -17,6 +17,7 @@ export function generateMetadata({
   return {
     title: `${project.name.en} — Project`,
     description: project.tagline.en,
+    alternates: { canonical: `/projects/${project.slug}` },
   };
 }
 

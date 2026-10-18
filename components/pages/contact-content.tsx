@@ -21,8 +21,8 @@ export function ContactContent() {
     {
       icon: Github,
       title: c.githubCard,
-      value: "@xxraphaelgirardxx",
-      href: "https://github.com/xxraphaelgirardxx",
+      value: "@GirardRaphael",
+      href: "https://github.com/GirardRaphael",
       external: true,
     },
     {

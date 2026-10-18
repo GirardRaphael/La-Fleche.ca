@@ -1,5 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  images: { formats: ["image/avif", "image/webp"] },
+  async redirects() {
+    return [
+      { source: "/projects/ai-escalation-manager", destination: "/projects/interntask-ai", permanent: true },
+      { source: "/projects/dispatch-ai", destination: "/projects/inventory-management", permanent: true },
+      { source: "/projects/amq-delivery-app", destination: "/projects/inventory-management", permanent: true },
+      { source: "/projects/inbox-ai", destination: "/projects", permanent: true },
+      { source: "/projects/power-bi-dashboards", destination: "/projects#foundations-title", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

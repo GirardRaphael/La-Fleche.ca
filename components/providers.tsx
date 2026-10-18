@@ -1,5 +1,6 @@
 "use client";
 
+import { MotionConfig } from "framer-motion";
 import { ThemeProvider } from "next-themes";
 import { LanguageProvider } from "@/lib/i18n";
 import type { ReactNode } from "react";
@@ -12,7 +13,7 @@ export function Providers({ children }: { children: ReactNode }) {
       enableSystem={false}
       disableTransitionOnChange
     >
-      <LanguageProvider>{children}</LanguageProvider>
+      <MotionConfig reducedMotion="user"><LanguageProvider>{children}</LanguageProvider></MotionConfig>
     </ThemeProvider>
   );
 }

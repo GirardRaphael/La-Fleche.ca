@@ -33,10 +33,10 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
   const [lang, setLangState] = useState<Lang>("fr");
 
   useEffect(() => {
-    const stored = window.localStorage.getItem(STORAGE_KEY) as Lang | null;
-    if (stored === "fr" || stored === "en") {
-      setLangState(stored);
-    }
+    try {
+      const stored = window.localStorage.getItem(STORAGE_KEY);
+      if (stored === "fr" || stored === "en") setLangState(stored);
+    } catch { /* Language switching remains available when storage is blocked. */ }
   }, []);
 
   useEffect(() => {
@@ -45,7 +45,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
 
   const setLang = (next: Lang) => {
     setLangState(next);
-    window.localStorage.setItem(STORAGE_KEY, next);
+    try { window.localStorage.setItem(STORAGE_KEY, next); } catch { /* Session-only preference. */ }
   };
 
   const value: LanguageContextValue = {

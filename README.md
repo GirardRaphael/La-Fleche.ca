@@ -202,3 +202,24 @@ These appear in the footer and Contact page — update them in
   article pages or a CMS when ready.
 
 Built with precision in Québec. 🏹
+
+
+## Portfolio catalog and verification
+
+`data/projects.ts` contains the bilingual project catalog, explicit implementation stages, technology stacks and source links. The `featured` flag selects the six home-page cards. Supporting repositories are shown separately as learning, earlier work or empty repositories. Only public repositories are included. Review repository code before changing implementation claims; do not label planning work as a finished application.
+
+The `/projects` page supports accent-insensitive, multi-word search and category filters. All main projects have statically generated detail pages. Old project URLs redirect to the matching current project. The site uses native scrolling and a static ambient background, with reduced-motion support.
+
+Verification:
+
+```powershell
+npm run lint
+npm run test:portfolio
+npm run build
+npm run start -- --port 3100
+# In another terminal:
+$env:TEST_BASE_URL = "http://localhost:3100"
+npm run test:portfolio
+```
+
+The portfolio check validates all 23 public repositories, bilingual content, search behavior and unique routes. With `TEST_BASE_URL`, it also checks every project detail route, canonical URLs, legacy redirects, unknown-page handling and the home-page selection. Contact API checks (`npm run test:api`) use invalid payloads and do not send email.

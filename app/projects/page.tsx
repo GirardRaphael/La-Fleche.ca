@@ -2,9 +2,10 @@ import type { Metadata } from "next";
 import { ProjectsContent } from "@/components/pages/projects-content";
 
 export const metadata: Metadata = {
-  title: "Projects — AI Systems for Operations & Logistics",
+  alternates: { canonical: "/projects" },
+  title: "Projects — AI, Web, Mobile & Machine Learning",
   description:
-    "Explore La Flèche AI projects: escalation manager, inbox AI, loading planner, dispatch AI, call assistant, Power BI dashboards and more.",
+    "Explore Raphael Girard’s public GitHub projects: AI applications, forecasting, computer vision, web and mobile development, logistics and cloud infrastructure.",
 };
 
 export default function ProjectsPage() {
